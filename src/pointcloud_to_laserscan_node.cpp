@@ -47,6 +47,7 @@
 #include <string>
 #include <thread>
 #include <utility>
+#include <cmath>
 
 #include "sensor_msgs/point_cloud2_iterator.hpp"
 #include "tf2_sensor_msgs/tf2_sensor_msgs.h"
@@ -174,6 +175,7 @@ void PointCloudToLaserScanNode::cloudCallback(
   }
 
   // Iterate through pointcloud
+#pragma omp parallel for
   for (sensor_msgs::PointCloud2ConstIterator<float> iter_x(*cloud_msg, "x"),
     iter_y(*cloud_msg, "y"), iter_z(*cloud_msg, "z");
     iter_x != iter_x.end(); ++iter_x, ++iter_y, ++iter_z)
